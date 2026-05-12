@@ -98,7 +98,7 @@
     .proof { margin-top:28px; display:grid; grid-template-columns:repeat(4,1fr); gap:12px; max-width:650px; }
     .proof-item { display:flex; align-items:center; gap:9px; color:#d7e4f5; font-size:12px; font-weight:900; }
     .proof-icon { width:28px; height:28px; display:grid; place-items:center; border-radius:9px; border:1px solid rgba(255,34,191,.45); color: var(--pink); background:rgba(255,34,191,.08); }
-    .visual { min-height: 630px; position:relative; perspective: 1400px; }
+    .visual { min-height: 680px; position:relative; perspective: 1400px; }
     .orb { position:absolute; border-radius:50%; filter:blur(34px); opacity:.74; animation:orb 9s ease-in-out infinite; pointer-events:none; }
     .orb.one { width:220px; height:220px; right:9%; top:6%; background:rgba(255,34,191,.23); }
     .orb.two { width:260px; height:260px; left:10%; bottom:8%; background:rgba(20,127,255,.22); animation-delay:-3s; }
@@ -106,14 +106,17 @@
     .screen { position:absolute; overflow:hidden; border-radius:21px; border:1px solid rgba(92,181,255,.25); background:rgba(5,17,37,.82); box-shadow: 0 24px 75px rgba(0,0,0,.46), 0 0 42px rgba(20,127,255,.18); transform-style: preserve-3d; }
     .screen::before { content:""; position:absolute; inset:0; z-index:2; pointer-events:none; border-radius:inherit; padding:1px; background:linear-gradient(135deg, rgba(255,34,191,.9), rgba(53,216,255,.72), rgba(255,34,191,.35)); -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude; }
     .screen img { width:100%; height:100%; object-fit: cover; opacity:0; transition: opacity .5s ease; }
+    .screen-label { position:absolute; left:16px; bottom:16px; z-index:3; padding:8px 12px; border-radius:999px; background:rgba(2,8,23,.76); border:1px solid rgba(255,34,191,.42); color:#fff; font-size:12px; font-weight:1000; letter-spacing:.04em; text-transform:uppercase; backdrop-filter:blur(10px); }
     .screen img.loaded { opacity:.96; }
     .placeholder { position:absolute; inset:0; display:grid; place-items:center; color:#8da1bc; font-weight:900; background:linear-gradient(135deg, rgba(10,34,65,.9), rgba(4,16,39,.9)); }
     .main-screen { width: 645px; height: 410px; right:0; top:16px; animation: floatMain 7s ease-in-out infinite; }
-    .finance-screen { width: 510px; height: 355px; left:0; top:292px; transform:rotateY(-9deg) rotateZ(-1deg); animation: floatFinance 8.6s ease-in-out infinite; }
-    .appt-screen { width: 470px; height: 292px; right:18px; bottom:18px; transform:rotateY(-13deg) rotateZ(1deg); animation: floatAppt 7.8s ease-in-out infinite; }
+    .finance-screen { width: 432px; height: 302px; left:0; top:276px; transform:rotateY(-9deg) rotateZ(-1deg); animation: floatFinance 8.6s ease-in-out infinite; }
+    .appt-screen { width: 400px; height: 280px; right:0; bottom:34px; transform:rotateY(-13deg) rotateZ(1deg); animation: floatAppt 7.8s ease-in-out infinite; }
+    .report-screen { width: 350px; height: 245px; left:120px; bottom:0; transform:rotateY(10deg) rotateZ(1deg); animation: floatReport 8.2s ease-in-out infinite; }
     @keyframes floatMain { 0%,100%{ transform:translateY(0) rotateY(-8deg) rotateX(4deg); } 50%{ transform:translateY(-18px) rotateY(-6deg) rotateX(3deg); } }
     @keyframes floatFinance { 0%,100%{ transform:translateY(0) rotateY(-9deg) rotateZ(-1deg); } 50%{ transform:translateY(14px) rotateY(-7deg) rotateZ(-.5deg); } }
     @keyframes floatAppt { 0%,100%{ transform:translateY(0) rotateY(-13deg) rotateZ(1deg); } 50%{ transform:translateY(-12px) rotateY(-11deg) rotateZ(.5deg); } }
+    @keyframes floatReport { 0%,100%{ transform:translateY(0) rotateY(10deg) rotateZ(1deg); } 50%{ transform:translateY(16px) rotateY(8deg) rotateZ(.5deg); } }
     .trust { margin: 10px 0 72px; display:grid; grid-template-columns:1.7fr repeat(4,1fr); gap:22px; align-items:center; padding:22px 26px; border-radius:20px; border:1px solid rgba(92,181,255,.2); background:linear-gradient(135deg, rgba(12,34,64,.82), rgba(5,20,43,.7)); box-shadow: 0 18px 54px rgba(0,0,0,.24); }
     .trust-title { color:#d9e7f8; font-weight:900; }
     .trust-item { display:flex; align-items:center; gap:10px; color:#d5e2f3; font-weight:900; font-size:14px; }
@@ -127,6 +130,8 @@
     .feature { min-height:288px; border:1px solid rgba(92,181,255,.22); background:linear-gradient(135deg, rgba(17,47,84,.82), rgba(5,21,46,.72)); border-radius:22px; overflow:hidden; display:grid; grid-template-columns:1.12fr .88fr; gap:22px; padding:22px; box-shadow: 0 18px 50px rgba(0,0,0,.22); }
     .feature:nth-child(2), .feature:nth-child(4) { grid-template-columns:.92fr 1.08fr; }
     .mini { border:1px solid rgba(92,181,255,.18); border-radius:16px; background:rgba(2,11,31,.48); min-height:222px; padding:14px; overflow:hidden; }
+    .screenshot-card { padding:0; min-height:222px; box-shadow:inset 0 0 0 1px rgba(255,34,191,.14), 0 0 26px rgba(20,127,255,.14); }
+    .screenshot-card img { width:100%; height:100%; min-height:222px; object-fit:cover; object-position:left top; }
     .feature-copy { align-self:center; }
     .feature-icon { color:var(--pink); font-size:32px; margin-bottom:10px; }
     .feature h3 { margin:0 0 12px; font-size:25px; line-height:1.05; letter-spacing:-.03em; }
@@ -170,6 +175,7 @@
     @keyframes sweep { 0%,100%{ transform:translateX(-8%); opacity:.55; } 50%{ transform:translateX(8%); opacity:.95; } }
     .final-logo { width:130px; filter:drop-shadow(0 0 25px rgba(255,34,191,.55)); opacity:0; transition: opacity .3s ease; position:relative; }
     .final-logo.loaded { opacity:1; }
+    .final-logo-mark { width:118px; height:118px; border-radius:28px; display:grid; place-items:center; position:relative; color:white; font-size:40px; font-weight:1000; letter-spacing:-.12em; background:linear-gradient(135deg, rgba(255,34,191,.88), rgba(20,127,255,.7)); box-shadow:var(--shadowPink), var(--shadowBlue); }
     .final h2 { margin:0; font-size:clamp(30px,4vw,48px); line-height:1.03; letter-spacing:-.045em; position:relative; }
     .checks { color:#d9e7f8; font-weight:900; display:grid; gap:12px; position:relative; }
     .checks div::before { content:"✓"; color:white; background:var(--pink); width:22px; height:22px; border-radius:50%; display:inline-grid; place-items:center; margin-right:10px; font-size:13px; }
@@ -179,10 +185,11 @@
     @media (max-width: 980px) {
       .nav-links { display:none; }
       .hero { grid-template-columns:1fr; min-height:auto; }
-      .visual { min-height:530px; }
+      .visual { min-height:600px; }
       .main-screen { width:min(100%,645px); right:0; }
       .finance-screen { width:54%; min-width:330px; }
       .appt-screen { width:56%; min-width:340px; }
+      .report-screen { width:52%; min-width:320px; left:12%; }
       .trust,.pills { grid-template-columns:repeat(2,1fr); }
       .grid { grid-template-columns:1fr; }
       .testimonial { grid-template-columns:80px 1fr; }
@@ -196,10 +203,11 @@
       .hero { padding-top:34px; }
       .proof,.trust,.pills { grid-template-columns:1fr; }
       .hero-actions .btn { width:100%; }
-      .visual { min-height:430px; }
+      .visual { min-height:520px; }
       .main-screen { height:260px; }
       .finance-screen { top:230px; left:0; width:70%; min-width:260px; height:190px; }
-      .appt-screen { right:0; bottom:0; width:68%; min-width:260px; height:165px; }
+      .appt-screen { right:0; bottom:70px; width:68%; min-width:260px; height:165px; }
+      .report-screen { left:18px; bottom:0; width:68%; min-width:250px; height:158px; }
       .feature,.feature:nth-child(2),.feature:nth-child(4) { grid-template-columns:1fr; }
       .testimonial { grid-template-columns:1fr; }
       .reviewer,.arrows { grid-column:auto; }
@@ -220,7 +228,7 @@
 
   <main id="top" class="wrap">
     <section class="hero">
-      <div class="reveal">
+      <div class="reveal visible">
         <div class="eyebrow"><span class="dot"></span> #1 All-in-One Grooming Software</div>
         <h1>Run Your Grooming Business <span class="pink">Without the Chaos</span></h1>
         <p class="copy">Appointments, clients, POS, messages, staff, inventory, reports, and finances — everything a modern grooming salon needs to stay booked, organized, and profitable.</p>
@@ -229,9 +237,10 @@
       </div>
       <div class="visual" aria-label="Animated Zoomie Groomie product screenshots">
         <span class="orb one"></span><span class="orb two"></span>
-        <div class="screen main-screen"><div class="placeholder">Loading dashboard</div><img id="dashboardImg" alt="Zoomie Groomie dashboard screenshot" /></div>
-        <div class="screen finance-screen"><div class="placeholder">Loading finances</div><img id="financesImg" alt="Zoomie Groomie finances screenshot" /></div>
-        <div class="screen appt-screen"><div class="placeholder">Loading appointments</div><img id="appointmentsImg" alt="Zoomie Groomie appointments screenshot" /></div>
+        <div class="screen main-screen"><img id="dashboardImg" class="loaded" src="assets/images/IMG_6308.png" alt="Zoomie Groomie dashboard screenshot" /><span class="screen-label">Dashboard</span></div>
+        <div class="screen finance-screen"><img id="financesImg" class="loaded" src="assets/images/IMG_6309.png" alt="Zoomie Groomie inventory screenshot" /><span class="screen-label">Inventory</span></div>
+        <div class="screen appt-screen"><img id="appointmentsImg" class="loaded" src="assets/images/IMG_6307.png" alt="Zoomie Groomie payroll breakdown screenshot" /><span class="screen-label">Staff Payroll</span></div>
+        <div class="screen report-screen"><img id="reportsImg" class="loaded" src="assets/images/IMG_6306.png" alt="Zoomie Groomie reports screenshot" /><span class="screen-label">Reports</span></div>
       </div>
     </section>
 
@@ -239,44 +248,21 @@
 
     <section id="features" class="reveal">
       <div class="kicker">All-in-one platform</div><h2 class="title">Everything You Need. All in One Place.</h2>
-      <div class="pills"><div class="pill"><span>🐾</span> Smart Appointments</div><div class="pill"><span>💬</span> Clients & Messaging</div><div class="pill"><span>💳</span> POS & Payments</div><div class="pill"><span>👥</span> Staff Management</div><div class="pill"><span>📊</span> Reports & Finances</div><div class="pill"><span>⋯</span> And So Much More</div></div>
+      <div class="pills"><div class="pill"><span>🐾</span> Smart Appointments</div><div class="pill"><span>📦</span> Inventory</div><div class="pill"><span>👥</span> Payroll</div><div class="pill"><span>📊</span> Reports</div><div class="pill"><span>💬</span> Clients</div><div class="pill"><span>⋯</span> And So Much More</div></div>
       <div class="grid">
-        <article class="feature"><div class="mini"><div class="cal-head"><span>May 9, 2026</span><span>Day</span></div><div class="cal-grid"><div class="times"><span>8 AM</span><span>9 AM</span><span>10 AM</span><span>11 AM</span><span>12 PM</span><span>1 PM</span></div><div><b>Richele B.</b><div class="appt">Buddy<small>Full Groom · 8:00–9:00</small></div><div class="appt">Charlie<small>Full Groom · 10:30–11:30</small></div></div><div><b>Fred D.</b><div class="appt blue">Luna<small>Bath & Brush · 9:15–10:15</small></div><div class="appt blue">Daisy<small>Nail Trim · 11:45–12:15</small></div></div></div></div><div class="feature-copy"><div class="feature-icon">📅</div><h3>Streamlined Appointments</h3><p>Easy scheduling, real-time updates, groomer workload views, and a calendar that keeps your whole day on track.</p><a href="#appointments">Learn more →</a></div></article>
-        <article class="feature"><div class="mini charge"><div class="pos-row"><span>Total</span><span class="total">$87.00</span></div><div class="select-row"><div class="chip">Card</div><div class="chip">VISA 4242</div></div><div class="tip-row"><div class="chip">15%</div><div class="chip active">20%</div><div class="chip">25%</div><div class="chip">Custom</div></div><div class="charge-btn">Charge $104.40</div></div><div class="feature-copy"><div class="feature-icon">💳</div><h3>Built-in POS & Payments</h3><p>Take payments, add tips, track sales, and keep cash and card transactions connected to your reports.</p><a href="#payments">Learn more →</a></div></article>
-        <article class="feature"><div class="mini"><div class="cal-head"><span>Messages</span><span>●</span></div><div class="search">Search conversations</div><div class="msg"><span class="avatar"></span><span class="msg-main"><b>Samantha J.</b><small>See you tomorrow!</small></span><span class="msg-time">10:30 AM</span></div><div class="msg"><span class="avatar"></span><span class="msg-main"><b>Mark T.</b><small>Thanks so much!</small></span><span class="msg-time">Yesterday</span></div><div class="msg"><span class="avatar"></span><span class="msg-main"><b>Emily R.</b><small>Can I move Cooper?</small></span><span class="msg-time">2 days ago</span></div></div><div class="feature-copy"><div class="feature-icon">💬</div><h3>Client Messaging That Connects</h3><p>Text clients, send reminders, reduce no-shows, and keep everyone in the loop automatically.</p><a href="#messages">Learn more →</a></div></article>
-        <article class="feature"><div class="mini"><div class="finance-top"><span>Monthly Overview</span><span>Apr 2026</span></div><div class="finance-top" style="font-size:13px;color:#a9b8cc;"><span>Revenue <b style="color:white">$12,450</b></span><span>Expenses <b style="color:#ff69d6">$7,280</b></span><span>Profit <b style="color:#16df7e">$5,170</b></span></div><div class="bar-chart"><div class="bars"><span class="bar" style="height:55%"></span><span class="bar blue" style="height:34%"></span></div><div class="bars"><span class="bar" style="height:70%"></span><span class="bar blue" style="height:42%"></span></div><div class="bars"><span class="bar" style="height:68%"></span><span class="bar blue" style="height:46%"></span></div><div class="bars"><span class="bar" style="height:82%"></span><span class="bar blue" style="height:48%"></span></div><div class="bars"><span class="bar" style="height:79%"></span><span class="bar blue" style="height:44%"></span></div><div class="bars"><span class="bar" style="height:92%"></span><span class="bar blue" style="height:50%"></span></div></div></div><div class="feature-copy"><div class="feature-icon">📊</div><h3>Reports & Finances Made Simple</h3><p>Know your numbers. Track profit, expenses, payments, payroll, sales tax, and performance with clean reports.</p><a href="#reports">Learn more →</a></div></article>
+        <article class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6308.png" alt="Zoomie Groomie dashboard with appointments, booking, activity, and client metrics" /></div><div class="feature-copy"><div class="feature-icon">📅</div><h3>Streamlined Appointments</h3><p>Easy scheduling, real-time updates, groomer workload views, and a calendar that keeps your whole day on track.</p><a href="#appointments">Learn more →</a></div></article>
+        <article class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6309.png" alt="Zoomie Groomie inventory and retail product screenshot" /></div><div class="feature-copy"><div class="feature-icon">📦</div><h3>Inventory & Retail Tracking</h3><p>Track retail products, supplies, stock value, potential revenue, profit, and item history from one clean workspace.</p><a href="#inventory">Learn more →</a></div></article>
+        <article class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6307.png" alt="Zoomie Groomie staff payroll breakdown screenshot" /></div><div class="feature-copy"><div class="feature-icon">👥</div><h3>Staff Payroll Clarity</h3><p>Review groomer appointments, commission rates, discounts, tips, and total earned amounts without spreadsheet cleanup.</p><a href="#staff">Learn more →</a></div></article>
+        <article class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6306.png" alt="Zoomie Groomie reports and revenue by weight class screenshot" /></div><div class="feature-copy"><div class="feature-icon">📊</div><h3>Reports & Finances Made Simple</h3><p>Know your numbers. Track profit, expenses, payments, payroll, sales tax, and performance with clean reports.</p><a href="#reports">Learn more →</a></div></article>
       </div>
     </section>
 
     <section class="testimonial reveal"><div class="quote">“</div><p>Zoomie Groomie completely transformed our salon. We’re more organized, our clients are happier, and our business finally feels under control.</p><div class="reviewer"><div class="face"></div><div><div class="stars">★★★★★</div><b>Jessica Miller</b><small>Paws & Relax Grooming · Dallas, TX</small></div></div><div class="arrows"><span class="arrow">‹</span><span class="arrow">›</span></div></section>
 
-    <section id="trial" class="final reveal"><img id="logoBottom" class="final-logo" alt="Zoomie Groomie logo" /><h2>Ready to Run a Smoother, <span class="pink">More Profitable Salon?</span></h2><div class="checks"><div>Start your free 14-day trial</div><div>No credit card required</div><div>Cancel anytime</div></div><div class="final-actions"><a class="btn btn-primary" href="#start">Start Free Trial 🚀</a><a class="btn btn-secondary" href="#demo">Book a Demo 📅</a></div></section>
+    <section id="trial" class="final reveal"><div class="final-logo-mark" aria-label="Zoomie Groomie">ZG</div><h2>Ready to Run a Smoother, <span class="pink">More Profitable Salon?</span></h2><div class="checks"><div>Start your free 14-day trial</div><div>No credit card required</div><div>Cancel anytime</div></div><div class="final-actions"><a class="btn btn-primary" href="#start">Start Free Trial 🚀</a><a class="btn btn-secondary" href="#demo">Book a Demo 📅</a></div></section>
   </main>
 
   <script>
-    async function loadBase64Image(id, path) {
-      try {
-        const res = await fetch(path, { cache: 'force-cache' });
-        if (!res.ok) throw new Error(path + ' failed');
-        const text = (await res.text()).trim();
-        const img = document.getElementById(id);
-        img.src = 'data:image/webp;base64,' + text;
-        img.onload = () => {
-          img.classList.add('loaded');
-          const ph = img.previousElementSibling;
-          if (ph && ph.classList.contains('placeholder')) ph.remove();
-        };
-      } catch (err) {
-        console.warn(err);
-      }
-    }
-
-    loadBase64Image('logoTop', 'assets/logo.webp.b64');
-    loadBase64Image('logoBottom', 'assets/logo.webp.b64');
-    loadBase64Image('dashboardImg', 'assets/dashboard.webp.b64');
-    loadBase64Image('financesImg', 'assets/finances.webp.b64');
-    loadBase64Image('appointmentsImg', 'assets/appointments.webp.b64');
-
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) entry.target.classList.add('visible');
