@@ -27,8 +27,7 @@
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; overflow-x: hidden; width: 100%; }
-    @supports (overflow: clip) { html, body { overflow-x: clip; } }
+    html { scroll-behavior: smooth; width: 100%; }
     body {
       margin: 0;
       color: var(--text);
@@ -36,7 +35,6 @@
         radial-gradient(circle at 16% 4%, rgba(255,34,191,.22), transparent 30%),
         radial-gradient(circle at 82% 12%, rgba(20,127,255,.22), transparent 34%),
         linear-gradient(180deg, #020817 0%, #031630 48%, #020817 100%);
-      overflow-x: hidden;
       width: 100%;
       max-width: 100%;
     }
@@ -94,7 +92,7 @@
     .btn-secondary { background: rgba(7, 25, 51, .76); border-color: rgba(53,216,255,.55); box-shadow: var(--shadowBlue); color: white; }
     .hero { min-height: 760px; padding: 58px 0 34px; display:grid; grid-template-columns: .86fr 1.14fr; align-items:center; gap: 46px; position:relative; overflow: hidden; }
     .hero::before { content:"ZG"; position:absolute; right:0; top:20px; transform:translateX(24%); font-size:340px; font-weight:1000; letter-spacing:-.1em; color:transparent; -webkit-text-stroke: 1px rgba(255,34,191,.14); opacity:.75; z-index:-1; pointer-events:none; }
-    .logo-backdrop { position:absolute; inset:18px -4% auto auto; width:min(520px, 54vw); aspect-ratio:1; z-index:-1; pointer-events:none; background:var(--logo-background, none) center / contain no-repeat; opacity:.13; filter:drop-shadow(0 0 42px rgba(255,34,191,.4)); transform:rotate(-7deg); }
+    .logo-backdrop { position:absolute; inset:18px -4% auto auto; width:min(620px, 58vw); aspect-ratio:1.55; z-index:-1; pointer-events:none; background:var(--logo-background, none) center / cover no-repeat; opacity:.22; filter:drop-shadow(0 0 42px rgba(255,34,191,.4)); transform:rotate(-3deg); border-radius:32px; }
     .eyebrow { width: fit-content; display:flex; align-items:center; gap:10px; padding:10px 15px; border-radius:999px; background: rgba(7,30,60,.75); border:1px solid rgba(53,216,255,.24); color:#dfecff; font-size:14px; font-weight:900; box-shadow: 0 0 30px rgba(20,127,255,.12); margin-bottom:24px; }
     .dot { width:10px; height:10px; border-radius:50%; background: var(--pink); box-shadow:0 0 0 0 rgba(255,34,191,.85); animation:pulse 1.8s infinite; }
     @keyframes pulse { 70% { box-shadow:0 0 0 13px rgba(255,34,191,0); } 100% { box-shadow:0 0 0 0 rgba(255,34,191,0); } }
@@ -143,6 +141,30 @@
     .feature h3 { margin:0 0 12px; font-size:25px; line-height:1.05; letter-spacing:-.03em; }
     .feature p { color:#bdcbdd; line-height:1.55; margin:0 0 14px; }
     .feature a { color: var(--cyan); font-weight:1000; }
+    .pricing-section, .info-section { scroll-margin-top: 108px; }
+    .pricing-section { margin:60px 0 48px; position:relative; }
+    .pricing-section::before { content:""; position:absolute; inset:42px -8% auto; height:310px; z-index:-1; pointer-events:none; background:radial-gradient(circle at 50% 50%, rgba(255,34,191,.18), transparent 64%), radial-gradient(circle at 68% 34%, rgba(53,216,255,.14), transparent 52%); filter:blur(8px); }
+    .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-items:stretch; }
+    .price-card { position:relative; overflow:hidden; border:1px solid rgba(92,181,255,.22); background:linear-gradient(160deg, rgba(17,47,84,.86), rgba(5,21,46,.82)); border-radius:24px; padding:26px; box-shadow:0 18px 54px rgba(0,0,0,.26); display:flex; flex-direction:column; gap:18px; }
+    .price-card::before { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(135deg, rgba(255,34,191,.14), transparent 32%, rgba(53,216,255,.12)); opacity:.86; }
+    .price-card > * { position:relative; }
+    .price-card.featured { border-color:rgba(255,34,191,.6); transform:translateY(-10px); box-shadow:var(--shadowPink), 0 24px 72px rgba(0,0,0,.34); }
+    .plan-badge { width:fit-content; padding:8px 12px; border-radius:999px; background:rgba(53,216,255,.12); border:1px solid rgba(53,216,255,.26); color:#e7f5ff; font-size:12px; font-weight:1000; text-transform:uppercase; letter-spacing:.08em; }
+    .featured .plan-badge { background:linear-gradient(135deg, rgba(255,34,191,.88), rgba(20,127,255,.68)); border-color:rgba(255,255,255,.24); }
+    .price-card h3 { margin:0; font-size:28px; letter-spacing:-.035em; }
+    .price { display:flex; align-items:flex-end; gap:8px; margin:2px 0; }
+    .price strong { font-size:52px; line-height:.9; letter-spacing:-.06em; }
+    .price span { color:#aebbd0; font-weight:900; padding-bottom:5px; }
+    .plan-copy { color:#c4d2e5; line-height:1.5; margin:0; min-height:72px; }
+    .plan-list { list-style:none; padding:0; margin:0; display:grid; gap:12px; color:#dce8f6; font-weight:850; }
+    .plan-list li { display:flex; gap:10px; align-items:flex-start; }
+    .plan-list li::before { content:"✓"; flex:0 0 auto; width:21px; height:21px; border-radius:50%; display:grid; place-items:center; background:rgba(255,34,191,.22); color:#fff; font-size:12px; border:1px solid rgba(255,34,191,.38); }
+    .price-card .btn { margin-top:auto; width:100%; }
+    .info-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin:40px 0 48px; }
+    .info-card { border:1px solid rgba(92,181,255,.2); background:rgba(6,24,52,.66); border-radius:22px; padding:24px; min-height:190px; box-shadow:0 14px 42px rgba(0,0,0,.2); }
+    .info-card h3 { margin:0 0 12px; font-size:24px; letter-spacing:-.03em; }
+    .info-card p, .info-card li { color:#c7d5e8; line-height:1.55; }
+    .info-card ul { margin:0; padding-left:20px; }
     .cal-head,.pos-row,.finance-top { display:flex; justify-content:space-between; align-items:center; color:#dbe8fa; font-weight:1000; margin-bottom:12px; }
     .cal-grid { display:grid; grid-template-columns:48px 1fr 1fr; gap:8px; font-size:12px; color:#9eafc3; }
     .times { display:grid; gap:10px; }
@@ -198,8 +220,9 @@
       .appt-screen { width:min(56%, 360px); min-width:0; }
       .report-screen { width:min(52%, 330px); min-width:0; left:12%; }
       .trust,.pills { grid-template-columns:repeat(2,1fr); }
-      .grid { grid-template-columns:1fr; }
+      .grid,.pricing-grid,.info-grid { grid-template-columns:1fr; }
       .testimonial { grid-template-columns:80px 1fr; }
+      .price-card.featured { transform:none; }
       .reviewer,.arrows { grid-column:span 2; }
       .final { grid-template-columns:1fr; }
     }
@@ -221,6 +244,7 @@
       .appt-screen { right:0; bottom:70px; width:68%; min-width:0; height:165px; }
       .report-screen { left:18px; bottom:0; width:68%; min-width:0; height:158px; }
       .feature,.feature:nth-child(2),.feature:nth-child(4) { grid-template-columns:1fr; }
+      .price strong { font-size:44px; }
       .testimonial { grid-template-columns:1fr; }
       .reviewer,.arrows { grid-column:auto; }
     }
@@ -235,7 +259,7 @@
         <span class="brand-word">Zoomie <span>Groomie</span></span>
       </a>
       <div class="nav-links"><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#resources">Resources</a><a href="#about">About</a><a href="#contact">Contact</a></div>
-      <div class="nav-actions"><a class="login" href="#login">Log In</a><a class="btn btn-primary" href="#trial">Start Free Trial</a></div>
+      <div class="nav-actions"><a class="login" href="#login">Log In</a><a class="btn btn-primary" href="#pricing">Start Free Trial</a></div>
     </div>
   </nav>
 
@@ -246,7 +270,7 @@
         <div class="eyebrow"><span class="dot"></span> #1 All-in-One Grooming Software</div>
         <h1>Run Your Grooming Business <span class="pink">Without the Chaos</span></h1>
         <p class="copy">Appointments, clients, POS, messages, staff, inventory, reports, and finances — everything a modern grooming salon needs to stay booked, organized, and profitable.</p>
-        <div class="hero-actions"><a class="btn btn-primary" href="#demo">📅 Book a Demo</a><a class="btn btn-secondary" href="#trial">🚀 Start Free Trial</a></div>
+        <div class="hero-actions"><a class="btn btn-primary" href="#contact">📅 Book a Demo</a><a class="btn btn-secondary" href="#pricing">🚀 Start Free Trial</a></div>
         <div class="proof"><div class="proof-item"><span class="proof-icon">✓</span> Easy to Use</div><div class="proof-item"><span class="proof-icon">▣</span> No Credit Card</div><div class="proof-item"><span class="proof-icon">↻</span> Cancel Anytime</div><div class="proof-item"><span class="proof-icon">☎</span> US Support</div></div>
       </div>
       <div class="visual" aria-label="Animated Zoomie Groomie product screenshots">
@@ -264,16 +288,55 @@
       <div class="kicker">All-in-one platform</div><h2 class="title">Everything You Need. All in One Place.</h2>
       <div class="pills"><div class="pill"><span>🐾</span> Smart Appointments</div><div class="pill"><span>📦</span> Inventory</div><div class="pill"><span>👥</span> Payroll</div><div class="pill"><span>📊</span> Reports</div><div class="pill"><span>💬</span> Clients</div><div class="pill"><span>⋯</span> And So Much More</div></div>
       <div class="grid">
-        <article class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6308.png" alt="Zoomie Groomie dashboard with appointments, booking, activity, and client metrics" /></div><div class="feature-copy"><h3>Streamlined Appointments</h3><p>Easy scheduling, real-time updates, groomer workload views, and a calendar that keeps your whole day on track.</p><a href="#appointments">Learn more →</a></div></article>
-        <article class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6309.png" alt="Zoomie Groomie inventory and retail product screenshot" /></div><div class="feature-copy"><h3>Inventory & Retail Tracking</h3><p>Track retail products, supplies, stock value, potential revenue, profit, and item history from one clean workspace.</p><a href="#inventory">Learn more →</a></div></article>
-        <article class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6307.png" alt="Zoomie Groomie staff payroll breakdown screenshot" /></div><div class="feature-copy"><h3>Staff Payroll Clarity</h3><p>Review groomer appointments, commission rates, discounts, tips, and total earned amounts without spreadsheet cleanup.</p><a href="#staff">Learn more →</a></div></article>
-        <article class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6306.png" alt="Zoomie Groomie reports and revenue by weight class screenshot" /></div><div class="feature-copy"><h3>Reports & Finances Made Simple</h3><p>Know your numbers. Track profit, expenses, payments, payroll, sales tax, and performance with clean reports.</p><a href="#reports">Learn more →</a></div></article>
+        <article id="appointments" class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6308.png" alt="Zoomie Groomie dashboard with appointments, booking, activity, and client metrics" /></div><div class="feature-copy"><h3>Streamlined Appointments</h3><p>Easy scheduling, real-time updates, groomer workload views, and a calendar that keeps your whole day on track.</p><a href="#appointments">Learn more →</a></div></article>
+        <article id="inventory" class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6309.png" alt="Zoomie Groomie inventory and retail product screenshot" /></div><div class="feature-copy"><h3>Inventory & Retail Tracking</h3><p>Track retail products, supplies, stock value, potential revenue, profit, and item history from one clean workspace.</p><a href="#inventory">Learn more →</a></div></article>
+        <article id="staff" class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6307.png" alt="Zoomie Groomie staff payroll breakdown screenshot" /></div><div class="feature-copy"><h3>Staff Payroll Clarity</h3><p>Review groomer appointments, commission rates, discounts, tips, and total earned amounts without spreadsheet cleanup.</p><a href="#staff">Learn more →</a></div></article>
+        <article id="reports" class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6306.png" alt="Zoomie Groomie reports and revenue by weight class screenshot" /></div><div class="feature-copy"><h3>Reports & Finances Made Simple</h3><p>Know your numbers. Track profit, expenses, payments, payroll, sales tax, and performance with clean reports.</p><a href="#reports">Learn more →</a></div></article>
       </div>
+    </section>
+
+    <section id="pricing" class="pricing-section reveal">
+      <div class="kicker">Simple monthly pricing</div><h2 class="title">Choose the Plan That Fits Your Shop</h2>
+      <div class="pricing-grid">
+        <article class="price-card">
+          <div class="plan-badge">Solo</div>
+          <h3>Starter</h3>
+          <div class="price"><strong>$49</strong><span>/ month</span></div>
+          <p class="plan-copy">For solo groomers and small shops that need clean scheduling, clients, and checkout.</p>
+          <ul class="plan-list"><li>Appointment calendar</li><li>Client profiles and pet notes</li><li>Point-of-sale checkout</li><li>Basic reports</li></ul>
+          <a class="btn btn-secondary" href="#contact">Choose Starter</a>
+        </article>
+        <article class="price-card featured">
+          <div class="plan-badge">Most Popular</div>
+          <h3>Growth</h3>
+          <div class="price"><strong>$99</strong><span>/ month</span></div>
+          <p class="plan-copy">For busy salons ready to manage staff, payroll, inventory, and customer communication in one place.</p>
+          <ul class="plan-list"><li>Everything in Starter</li><li>Staff payroll and commissions</li><li>Inventory and retail tracking</li><li>Text reminders and client messaging</li></ul>
+          <a class="btn btn-primary" href="#contact">Start Growth Trial</a>
+        </article>
+        <article class="price-card">
+          <div class="plan-badge">Multi-location</div>
+          <h3>Pro</h3>
+          <div class="price"><strong>$149</strong><span>/ month</span></div>
+          <p class="plan-copy">For growing teams that want deeper financial visibility, advanced reporting, and priority help.</p>
+          <ul class="plan-list"><li>Everything in Growth</li><li>Advanced finances and tax reports</li><li>Multi-location visibility</li><li>Priority onboarding support</li></ul>
+          <a class="btn btn-secondary" href="#contact">Choose Pro</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="info-section reveal" aria-label="Resources, about, contact, and login">
+      <div class="info-grid">
+        <article id="resources" class="info-card"><h3>Resources</h3><p>Use Zoomie Groomie to reduce no-shows, keep pet notes organized, track retail stock, and understand exactly where revenue is coming from.</p></article>
+        <article id="about" class="info-card"><h3>About</h3><p>Built for grooming businesses that need practical software: fast calendars, clear client histories, payroll visibility, and reports owners can trust.</p></article>
+        <article id="contact" class="info-card"><h3>Contact / Demo</h3><p>Ready to start or book a walkthrough? Email <a href="mailto:hello@zoomiegroomie.com">hello@zoomiegroomie.com</a> and tell us which plan you want to try.</p></article>
+      </div>
+      <article id="login" class="info-card"><h3>Log In</h3><p>The customer login portal is coming soon. Existing early-access salons can email <a href="mailto:support@zoomiegroomie.com">support@zoomiegroomie.com</a> for their sign-in link.</p></article>
     </section>
 
     <section class="testimonial reveal"><div class="quote">“</div><p>Zoomie Groomie completely transformed our salon. We’re more organized, our clients are happier, and our business finally feels under control.</p><div class="reviewer"><div class="face"></div><div><div class="stars">★★★★★</div><b>Jessica Miller</b><small>Paws & Relax Grooming · Dallas, TX</small></div></div><div class="arrows"><span class="arrow">‹</span><span class="arrow">›</span></div></section>
 
-    <section id="trial" class="final reveal"><div class="final-logo-mark" aria-label="Zoomie Groomie"><img id="logoFinal" class="logo-img" alt="Zoomie Groomie logo" /><span class="logo-fallback">ZG</span></div><h2>Ready to Run a Smoother, <span class="pink">More Profitable Salon?</span></h2><div class="checks"><div>Start your free 14-day trial</div><div>No credit card required</div><div>Cancel anytime</div></div><div class="final-actions"><a class="btn btn-primary" href="#start">Start Free Trial 🚀</a><a class="btn btn-secondary" href="#demo">Book a Demo 📅</a></div></section>
+    <section id="trial" class="final reveal"><div class="final-logo-mark" aria-label="Zoomie Groomie"><img id="logoFinal" class="logo-img" alt="Zoomie Groomie logo" /><span class="logo-fallback">ZG</span></div><h2>Ready to Run a Smoother, <span class="pink">More Profitable Salon?</span></h2><div class="checks"><div>Start your free 14-day trial</div><div>No credit card required</div><div>Cancel anytime</div></div><div class="final-actions"><a class="btn btn-primary" href="#pricing">Start Free Trial 🚀</a><a class="btn btn-secondary" href="#contact">Book a Demo 📅</a></div></section>
   </main>
   </div>
 
@@ -293,6 +356,7 @@
         'assets/images/zoomie-groomie-logo.webp'
       ],
       background: [
+        'assets/images/F70C9028-8C0C-4875-BF43-E8746C77F1A3.png',
         'assets/images/logo-background.png',
         'assets/images/logo-background.webp',
         'assets/images/zoomie-groomie-background.png',
