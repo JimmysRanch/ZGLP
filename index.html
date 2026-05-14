@@ -152,13 +152,16 @@
     .pills { display:grid; grid-template-columns:repeat(6,1fr); gap:12px; margin-bottom:24px; }
     .pill { border:1px solid rgba(92,181,255,.22); background:linear-gradient(135deg, rgba(6,24,52,.76), rgba(255,34,191,.08)); border-radius:16px; padding:14px 12px; color:#d3e0f1; font-weight:900; font-size:13px; display:flex; align-items:center; gap:10px; justify-content:center; box-shadow: inset 0 0 22px rgba(53,216,255,.05); }
     .pill span { color:var(--pink); font-size:18px; }
-    .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-bottom:36px; }
-    .feature { min-height:288px; border:1px solid rgba(92,181,255,.22); background:linear-gradient(135deg, rgba(17,47,84,.82), rgba(5,21,46,.72)); border-radius:22px; overflow:hidden; display:grid; grid-template-columns:1.12fr .88fr; gap:22px; padding:22px; box-shadow: 0 18px 50px rgba(0,0,0,.22); position:relative; }
+    .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-bottom:36px; align-items:stretch; }
+    .feature { --feature-slide-x: -72px; min-height:100%; border:1px solid rgba(92,181,255,.22); background:linear-gradient(135deg, rgba(17,47,84,.82), rgba(5,21,46,.72)); border-radius:22px; overflow:hidden; display:grid; grid-template-rows:240px 1fr; gap:20px; padding:22px; box-shadow: 0 18px 50px rgba(0,0,0,.22); position:relative; opacity:0; transform:translate3d(var(--feature-slide-x), 0, 0); transition:opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1), border-color .5s ease, box-shadow .5s ease; transition-delay:var(--feature-delay, 0ms); will-change:opacity, transform; }
+    .feature:nth-child(even) { --feature-slide-x: 72px; }
+    .feature.in-view { opacity:1; transform:translate3d(0, 0, 0); border-color:rgba(255,34,191,.36); box-shadow: 0 22px 60px rgba(0,0,0,.25), 0 0 30px rgba(20,127,255,.16); }
     .feature::after { content:""; position:absolute; inset:auto -18% 18px 42%; height:2px; background:linear-gradient(90deg, transparent, rgba(255,34,191,.85), rgba(53,216,255,.85), transparent); box-shadow:0 0 18px rgba(255,34,191,.45); transform:rotate(-8deg); pointer-events:none; }
-    .feature:nth-child(2), .feature:nth-child(4) { grid-template-columns:.92fr 1.08fr; }
-    .mini { border:1px solid rgba(92,181,255,.18); border-radius:16px; background:rgba(2,11,31,.48); min-height:222px; padding:14px; overflow:hidden; }
-    .screenshot-card { padding:0; min-height:222px; box-shadow:inset 0 0 0 1px rgba(255,34,191,.14), 0 0 26px rgba(20,127,255,.14); }
-    .screenshot-card img { width:100%; height:100%; min-height:222px; object-fit:cover; object-position:left top; }
+    .mini { border:1px solid rgba(92,181,255,.18); border-radius:16px; background:rgba(2,11,31,.48); height:240px; padding:14px; overflow:hidden; }
+    .screenshot-card { padding:0; box-shadow:inset 0 0 0 1px rgba(255,34,191,.14), 0 0 26px rgba(20,127,255,.14); }
+    .screenshot-card img { width:100%; height:100%; object-fit:cover; object-position:left top; transform:scale(1.02); transform-origin:left top; }
+    .feature.in-view .screenshot-card img { animation:screenshotDrift 7s ease-in-out infinite alternate; }
+    @keyframes screenshotDrift { from { transform:scale(1.02) translate3d(0, 0, 0); } to { transform:scale(1.055) translate3d(-1.4%, -1.2%, 0); } }
     .feature-copy { align-self:center; }
     .feature h3 { margin:0 0 12px; font-size:25px; line-height:1.05; letter-spacing:-.03em; }
     .feature p { color:#bdcbdd; line-height:1.55; margin:0 0 14px; }
@@ -220,8 +223,8 @@
     .reviewer small { color:#a9b8cc; }
     .arrows { display:flex; gap:12px; }
     .arrow { width:45px; height:45px; border-radius:50%; display:grid; place-items:center; border:1px solid rgba(255,34,191,.55); color:white; font-size:22px; }
-    .final { position:relative; overflow:hidden; border-radius:30px 30px 0 0; border:1px solid rgba(92,181,255,.2); background:linear-gradient(105deg, rgba(255,34,191,.18), rgba(5,20,43,.92), rgba(20,127,255,.14)), rgba(5,20,43,.9); padding:46px; display:grid; grid-template-columns:460px minmax(320px, 1fr) 240px; gap:28px; align-items:center; }
-    .final::before { content:""; position:absolute; inset:auto -10% -20px -10%; height:120px; background:linear-gradient(90deg, transparent, rgba(255,34,191,.55), rgba(53,216,255,.42), transparent); filter:blur(18px); animation: sweep 6s ease-in-out infinite; }
+    .final { position:relative; overflow:hidden; margin-top:40px; padding:34px 0 58px; display:grid; grid-template-columns:460px minmax(320px, 1fr) 240px; gap:28px; align-items:center; }
+    .final::before { content:""; position:absolute; inset:auto -10% 8px -10%; height:90px; background:linear-gradient(90deg, transparent, rgba(255,34,191,.45), rgba(53,216,255,.34), transparent); filter:blur(20px); animation: sweep 6s ease-in-out infinite; z-index:-1; }
     @keyframes sweep { 0%,100%{ transform:translateX(-8%); opacity:.55; } 50%{ transform:translateX(8%); opacity:.95; } }
     .final-logo { width:130px; filter:drop-shadow(0 0 25px rgba(255,34,191,.55)); opacity:0; transition: opacity .3s ease; position:relative; }
     .final-logo.loaded { opacity:1; }
@@ -233,6 +236,12 @@
     .final-actions { display:grid; gap:12px; position:relative; grid-column:3; grid-row:1 / span 2; }
     .reveal { opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
     .reveal.visible { opacity:1; transform:translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      .feature, .feature.in-view { opacity:1; transform:none; transition:none; }
+      .feature.in-view .screenshot-card img { animation:none; }
+      .screenshot-card img { transform:none; }
+    }
+
     @media (max-width: 980px) {
       .nav-links { display:none; }
       .hero { min-height:auto; }
@@ -270,7 +279,8 @@
       .finance-screen { top:230px; left:0; width:70%; min-width:0; height:190px; }
       .appt-screen { right:0; bottom:70px; width:68%; min-width:0; height:165px; }
       .report-screen { left:18px; bottom:0; width:68%; min-width:0; height:158px; }
-      .feature,.feature:nth-child(2),.feature:nth-child(4) { grid-template-columns:1fr; }
+      .feature { grid-template-rows:220px 1fr; }
+      .mini { height:220px; }
       .price strong { font-size:44px; }
       .testimonial { grid-template-columns:1fr; }
       .reviewer,.arrows { grid-column:auto; }
@@ -286,7 +296,7 @@
         <span class="brand-word">Zoomie <span>Groomie</span></span>
       </a>
       <div class="nav-links"><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#resources">Resources</a><a href="#about">About</a><a href="#contact">Contact</a></div>
-      <div class="nav-actions"><a class="login" href="#login">Log In</a><a class="btn btn-primary" href="#pricing">Start Free Trial</a></div>
+      <div class="nav-actions"><a class="login" href="mailto:support@zoomiegroomie.com?subject=Zoomie%20Groomie%20login%20link">Log In</a><a class="btn btn-primary" href="mailto:hello@zoomiegroomie.com?subject=Start%20my%20free%20Zoomie%20Groomie%20trial">Start Free Trial</a></div>
     </div>
   </nav>
 
@@ -297,7 +307,7 @@
         <div class="eyebrow"><span class="dot"></span> #1 All-in-One Grooming Software</div>
         <h1>Run Your Grooming Business <span class="pink">Without the Chaos</span></h1>
         <p class="copy">Appointments, clients, POS, messages, staff, inventory, reports, and finances — everything a modern grooming salon needs to stay booked, organized, and profitable.</p>
-        <div class="hero-actions"><a class="btn btn-primary" href="#contact">📅 Book a Demo</a><a class="btn btn-secondary" href="#pricing">🚀 Start Free Trial</a></div>
+        <div class="hero-actions"><a class="btn btn-primary" href="mailto:hello@zoomiegroomie.com?subject=Book%20a%20Zoomie%20Groomie%20demo">📅 Book a Demo</a><a class="btn btn-secondary" href="mailto:hello@zoomiegroomie.com?subject=Start%20my%20free%20Zoomie%20Groomie%20trial">🚀 Start Free Trial</a></div>
         <div class="proof"><div class="proof-item"><span class="proof-icon">✓</span> Easy to Use</div><div class="proof-item"><span class="proof-icon">▣</span> No Credit Card</div><div class="proof-item"><span class="proof-icon">↻</span> Cancel Anytime</div><div class="proof-item"><span class="proof-icon">☎</span> US Support</div></div>
       </div>
     </section>
@@ -323,10 +333,12 @@
       <div class="kicker">All-in-one platform</div><h2 class="title">Everything You Need. All in One Place.</h2>
       <div class="pills"><div class="pill"><span>🐾</span> Smart Appointments</div><div class="pill"><span>📦</span> Inventory</div><div class="pill"><span>👥</span> Payroll</div><div class="pill"><span>📊</span> Reports</div><div class="pill"><span>💬</span> Clients</div><div class="pill"><span>⋯</span> And So Much More</div></div>
       <div class="grid">
-        <article id="appointments" class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6308.png" alt="Zoomie Groomie dashboard with appointments, booking, activity, and client metrics" /></div><div class="feature-copy"><h3>Streamlined Appointments</h3><p>Easy scheduling, real-time updates, groomer workload views, and a calendar that keeps your whole day on track.</p><a href="#appointments">Learn more →</a></div></article>
-        <article id="inventory" class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6309.png" alt="Zoomie Groomie inventory and retail product screenshot" /></div><div class="feature-copy"><h3>Inventory & Retail Tracking</h3><p>Track retail products, supplies, stock value, potential revenue, profit, and item history from one clean workspace.</p><a href="#inventory">Learn more →</a></div></article>
-        <article id="staff" class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6307.png" alt="Zoomie Groomie staff payroll breakdown screenshot" /></div><div class="feature-copy"><h3>Staff Payroll Clarity</h3><p>Review groomer appointments, commission rates, discounts, tips, and total earned amounts without spreadsheet cleanup.</p><a href="#staff">Learn more →</a></div></article>
-        <article id="reports" class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6306.png" alt="Zoomie Groomie reports and revenue by weight class screenshot" /></div><div class="feature-copy"><h3>Reports & Finances Made Simple</h3><p>Know your numbers. Track profit, expenses, payments, payroll, sales tax, and performance with clean reports.</p><a href="#reports">Learn more →</a></div></article>
+        <article id="appointments" class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6308.png" alt="Zoomie Groomie dashboard with appointments, booking, activity, and client metrics" /></div><div class="feature-copy"><h3>Streamlined Appointments</h3><p>Easy scheduling, real-time updates, groomer workload views, and a calendar that keeps your whole day on track.</p><a href="mailto:hello@zoomiegroomie.com?subject=Tell%20me%20more%20about%20appointments">Learn more →</a></div></article>
+        <article id="inventory" class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6309.png" alt="Zoomie Groomie inventory and retail product screenshot" /></div><div class="feature-copy"><h3>Inventory & Retail Tracking</h3><p>Track retail products, supplies, stock value, potential revenue, profit, and item history from one clean workspace.</p><a href="mailto:hello@zoomiegroomie.com?subject=Tell%20me%20more%20about%20inventory">Learn more →</a></div></article>
+        <article id="staff" class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6307.png" alt="Zoomie Groomie staff payroll breakdown screenshot" /></div><div class="feature-copy"><h3>Staff Payroll Clarity</h3><p>Review groomer appointments, commission rates, discounts, tips, and total earned amounts without spreadsheet cleanup.</p><a href="mailto:hello@zoomiegroomie.com?subject=Tell%20me%20more%20about%20staff%20payroll">Learn more →</a></div></article>
+        <article id="reports" class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6306.png" alt="Zoomie Groomie reports and revenue by weight class screenshot" /></div><div class="feature-copy"><h3>Reports & Finances Made Simple</h3><p>Know your numbers. Track profit, expenses, payments, payroll, sales tax, and performance with clean reports.</p><a href="mailto:hello@zoomiegroomie.com?subject=Tell%20me%20more%20about%20reports">Learn more →</a></div></article>
+        <article id="clients" class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6308.png" alt="Zoomie Groomie client and pet activity dashboard screenshot" /></div><div class="feature-copy"><h3>Client & Pet Profiles</h3><p>Keep customer details, pet notes, service preferences, booking history, and follow-up needs easy for your team to find.</p><a href="mailto:hello@zoomiegroomie.com?subject=Tell%20me%20more%20about%20client%20profiles">Learn more →</a></div></article>
+        <article id="checkout" class="feature"><div class="mini screenshot-card"><img src="assets/images/IMG_6306.png" alt="Zoomie Groomie payment and sales reporting screenshot" /></div><div class="feature-copy"><h3>Checkout & Sales Visibility</h3><p>Connect checkout activity with sales trends, service totals, tips, taxes, and the reports owners need at closing time.</p><a href="mailto:hello@zoomiegroomie.com?subject=Tell%20me%20more%20about%20checkout%20and%20sales">Learn more →</a></div></article>
       </div>
     </section>
 
@@ -339,7 +351,7 @@
           <div class="price"><strong>$49</strong><span>/ month</span></div>
           <p class="plan-copy">For solo groomers and small shops that need clean scheduling, clients, and checkout.</p>
           <ul class="plan-list"><li>Appointment calendar</li><li>Client profiles and pet notes</li><li>Point-of-sale checkout</li><li>Basic reports</li></ul>
-          <a class="btn btn-secondary" href="#contact">Choose Starter</a>
+          <a class="btn btn-secondary" href="mailto:hello@zoomiegroomie.com?subject=Choose%20Starter%20plan">Choose Starter</a>
         </article>
         <article class="price-card featured">
           <div class="plan-badge">Most Popular</div>
@@ -347,7 +359,7 @@
           <div class="price"><strong>$99</strong><span>/ month</span></div>
           <p class="plan-copy">For busy salons ready to manage staff, payroll, inventory, and customer communication in one place.</p>
           <ul class="plan-list"><li>Everything in Starter</li><li>Staff payroll and commissions</li><li>Inventory and retail tracking</li><li>Text reminders and client messaging</li></ul>
-          <a class="btn btn-primary" href="#contact">Start Growth Trial</a>
+          <a class="btn btn-primary" href="mailto:hello@zoomiegroomie.com?subject=Start%20Growth%20trial">Start Growth Trial</a>
         </article>
         <article class="price-card">
           <div class="plan-badge">Multi-location</div>
@@ -355,7 +367,7 @@
           <div class="price"><strong>$149</strong><span>/ month</span></div>
           <p class="plan-copy">For growing teams that want deeper financial visibility, advanced reporting, and priority help.</p>
           <ul class="plan-list"><li>Everything in Growth</li><li>Advanced finances and tax reports</li><li>Multi-location visibility</li><li>Priority onboarding support</li></ul>
-          <a class="btn btn-secondary" href="#contact">Choose Pro</a>
+          <a class="btn btn-secondary" href="mailto:hello@zoomiegroomie.com?subject=Choose%20Pro%20plan">Choose Pro</a>
         </article>
       </div>
     </section>
@@ -371,7 +383,7 @@
 
     <section class="testimonial reveal"><div class="quote">“</div><p>Zoomie Groomie completely transformed our salon. We’re more organized, our clients are happier, and our business finally feels under control.</p><div class="reviewer"><div class="face"></div><div><div class="stars">★★★★★</div><b>Jessica Miller</b><small>Paws & Relax Grooming · Dallas, TX</small></div></div><div class="arrows"><span class="arrow">‹</span><span class="arrow">›</span></div></section>
 
-    <section id="trial" class="final reveal"><div class="final-logo-mark" aria-label="Zoomie Groomie"><img id="logoFinal" class="logo-img" alt="Zoomie Groomie logo" /><span class="logo-fallback">ZG</span></div><h2>Ready to Run a Smoother, <span class="pink">More Profitable Salon?</span></h2><div class="checks"><div>Start your free 14-day trial</div><div>No credit card required</div><div>Cancel anytime</div></div><div class="final-actions"><a class="btn btn-primary" href="#pricing">Start Free Trial 🚀</a><a class="btn btn-secondary" href="#contact">Book a Demo 📅</a></div></section>
+    <section id="trial" class="final reveal"><div class="final-logo-mark" aria-label="Zoomie Groomie"><img id="logoFinal" class="logo-img" alt="Zoomie Groomie logo" /><span class="logo-fallback">ZG</span></div><h2>Ready to Run a Smoother, <span class="pink">More Profitable Salon?</span></h2><div class="checks"><div>Start your free 14-day trial</div><div>No credit card required</div><div>Cancel anytime</div></div><div class="final-actions"><a class="btn btn-primary" href="mailto:hello@zoomiegroomie.com?subject=Start%20my%20free%20Zoomie%20Groomie%20trial">Start Free Trial 🚀</a><a class="btn btn-secondary" href="mailto:hello@zoomiegroomie.com?subject=Book%20a%20Zoomie%20Groomie%20demo">Book a Demo 📅</a></div></section>
   </main>
   </div>
 
@@ -382,6 +394,63 @@
       });
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+    const featureCards = document.querySelectorAll('#features .feature');
+    featureCards.forEach((card, index) => {
+      card.style.setProperty('--feature-delay', `${Math.min(index * 70, 350)}ms`);
+    });
+
+    const getDocumentTop = (element) => {
+      let top = 0;
+      let current = element;
+      while (current) {
+        top += current.offsetTop;
+        current = current.offsetParent;
+      }
+      return top;
+    };
+
+    let previousFeatureScrollY = window.scrollY;
+    let featureScrollDirection = 'down';
+    let featureTicking = false;
+
+    const updateFeatureCards = () => {
+      const viewportTop = window.scrollY;
+      const viewportBottom = viewportTop + window.innerHeight;
+      const enterTop = viewportTop + window.innerHeight * 0.08;
+      const enterBottom = viewportBottom - window.innerHeight * 0.08;
+
+      featureCards.forEach((card) => {
+        const cardTop = getDocumentTop(card);
+        const cardBottom = cardTop + card.offsetHeight;
+        const isVisible = cardTop < enterBottom && cardBottom > enterTop;
+        const isBelowViewport = cardTop >= enterBottom;
+
+        if (isVisible) {
+          card.classList.add('in-view');
+        } else if (featureScrollDirection === 'up' && isBelowViewport) {
+          card.classList.remove('in-view');
+        }
+      });
+
+      featureTicking = false;
+    };
+
+    const requestFeatureUpdate = () => {
+      if (!featureTicking) {
+        window.requestAnimationFrame(updateFeatureCards);
+        featureTicking = true;
+      }
+    };
+
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+      featureScrollDirection = currentScrollY < previousFeatureScrollY ? 'up' : 'down';
+      previousFeatureScrollY = currentScrollY;
+      requestFeatureUpdate();
+    }, { passive: true });
+    window.addEventListener('resize', requestFeatureUpdate);
+    requestFeatureUpdate();
 
     const imageCandidates = {
       logo: [
