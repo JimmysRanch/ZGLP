@@ -153,9 +153,11 @@
     .pill { border:1px solid rgba(92,181,255,.22); background:linear-gradient(135deg, rgba(6,24,52,.76), rgba(255,34,191,.08)); border-radius:16px; padding:14px 12px; color:#d3e0f1; font-weight:900; font-size:13px; display:flex; align-items:center; gap:10px; justify-content:center; box-shadow: inset 0 0 22px rgba(53,216,255,.05); }
     .pill span { color:var(--pink); font-size:18px; }
     .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-bottom:36px; align-items:stretch; }
-    .feature { --feature-enter-x: 58px; --feature-enter-y: 18px; --feature-enter-scale: .982; min-height:100%; border:1px solid rgba(92,181,255,.22); background:linear-gradient(135deg, rgba(17,47,84,.82), rgba(5,21,46,.72)); border-radius:22px; overflow:hidden; display:grid; grid-template-rows:240px 1fr; gap:20px; padding:22px; box-shadow: 0 18px 50px rgba(0,0,0,.22); position:relative; opacity:0; transform:translate3d(var(--feature-enter-x), var(--feature-enter-y), 0) scale(var(--feature-enter-scale)); transition:opacity .78s cubic-bezier(.16, 1, .3, 1), transform .78s cubic-bezier(.16, 1, .3, 1), border-color .78s ease, box-shadow .78s ease; transition-delay:var(--feature-delay, 0ms); will-change:opacity, transform; }
-    .feature:nth-child(even) { --feature-enter-x: -58px; --feature-enter-y: 18px; }
-    .feature.in-view { opacity:1; transform:translate3d(0, 0, 0) scale(1); border-color:rgba(255,34,191,.36); box-shadow: 0 22px 60px rgba(0,0,0,.25), 0 0 30px rgba(20,127,255,.16); }
+    .feature { --feature-fly-x: 120vw; --feature-fly-y: 52px; --feature-overshoot-x: -18px; --feature-rebound-x: 5px; --feature-rotate: 5deg; --feature-boom-rotate: -.7deg; min-height:100%; border:1px solid rgba(92,181,255,.22); background:linear-gradient(135deg, rgba(17,47,84,.82), rgba(5,21,46,.72)); border-radius:22px; overflow:hidden; display:grid; grid-template-rows:240px 1fr; gap:20px; padding:22px; box-shadow: 0 18px 50px rgba(0,0,0,.22); position:relative; opacity:0; transform:translate3d(var(--feature-fly-x), var(--feature-fly-y), 0) scale(.88) rotate(var(--feature-rotate)); transition:border-color .5s ease, box-shadow .5s ease; will-change:opacity, transform; }
+    .feature:nth-child(even) { --feature-fly-x: -120vw; --feature-overshoot-x: 18px; --feature-rebound-x: -5px; --feature-rotate: -5deg; --feature-boom-rotate: .7deg; }
+    .feature.in-view { border-color:rgba(255,34,191,.36); box-shadow: 0 22px 60px rgba(0,0,0,.25), 0 0 30px rgba(20,127,255,.16); animation:featureFlyBoom .92s var(--feature-delay, 0ms) cubic-bezier(.16, 1, .3, 1) both; }
+    .feature.has-animated:not(.in-view) { animation:featureFlyBoom .92s var(--feature-delay, 0ms) cubic-bezier(.16, 1, .3, 1) reverse both; }
+    @keyframes featureFlyBoom { 0% { opacity:0; transform:translate3d(var(--feature-fly-x), var(--feature-fly-y), 0) scale(.88) rotate(var(--feature-rotate)); } 64% { opacity:1; transform:translate3d(var(--feature-overshoot-x), -8px, 0) scale(1.045) rotate(var(--feature-boom-rotate)); } 82% { opacity:1; transform:translate3d(var(--feature-rebound-x), 4px, 0) scale(.992) rotate(0deg); } 100% { opacity:1; transform:translate3d(0, 0, 0) scale(1) rotate(0deg); } }
     .feature::after { content:""; position:absolute; inset:auto -18% 18px 42%; height:2px; background:linear-gradient(90deg, transparent, rgba(255,34,191,.85), rgba(53,216,255,.85), transparent); box-shadow:0 0 18px rgba(255,34,191,.45); transform:rotate(-8deg); pointer-events:none; }
     .mini { border:1px solid rgba(92,181,255,.18); border-radius:16px; background:rgba(2,11,31,.48); height:240px; padding:14px; overflow:hidden; }
     .screenshot-card { padding:0; box-shadow:inset 0 0 0 1px rgba(255,34,191,.14), 0 0 26px rgba(20,127,255,.14); }
@@ -237,7 +239,7 @@
     .reveal { opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
     .reveal.visible { opacity:1; transform:translateY(0); }
     @media (prefers-reduced-motion: reduce) {
-      .feature { opacity:1; transform:none; transition:none; }
+      .feature, .feature.in-view, .feature.has-animated:not(.in-view) { opacity:1; transform:none; transition:none; animation:none; }
       .feature.in-view .screenshot-card img { animation:none; }
       .screenshot-card img { transform:none; }
     }
@@ -400,12 +402,57 @@
       card.style.setProperty('--feature-delay', `${Math.min(index * 70, 350)}ms`);
     });
 
-    const featureObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        entry.target.classList.toggle('in-view', entry.isIntersecting);
+    const getDocumentTop = (element) => {
+      let top = 0;
+      let current = element;
+      while (current) {
+        top += current.offsetTop;
+        current = current.offsetParent;
+      }
+      return top;
+    };
+
+    let previousFeatureScrollY = window.scrollY;
+    let featureScrollDirection = 'down';
+    let featureTicking = false;
+
+    const updateFeatureCards = () => {
+      const viewportTop = window.scrollY;
+      const viewportBottom = viewportTop + window.innerHeight;
+      const enterTop = viewportTop + window.innerHeight * 0.08;
+      const enterBottom = viewportBottom - window.innerHeight * 0.08;
+
+      featureCards.forEach((card) => {
+        const cardTop = getDocumentTop(card);
+        const cardBottom = cardTop + card.offsetHeight;
+        const isVisible = cardTop < enterBottom && cardBottom > enterTop;
+        const isBelowViewport = cardTop >= enterBottom;
+
+        if (isVisible) {
+          card.classList.add('has-animated', 'in-view');
+        } else if (featureScrollDirection === 'up' && isBelowViewport) {
+          card.classList.remove('in-view');
+        }
       });
-    }, { rootMargin: '-8% 0px -8% 0px', threshold: 0.22 });
-    featureCards.forEach((card) => featureObserver.observe(card));
+
+      featureTicking = false;
+    };
+
+    const requestFeatureUpdate = () => {
+      if (!featureTicking) {
+        window.requestAnimationFrame(updateFeatureCards);
+        featureTicking = true;
+      }
+    };
+
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+      featureScrollDirection = currentScrollY < previousFeatureScrollY ? 'up' : 'down';
+      previousFeatureScrollY = currentScrollY;
+      requestFeatureUpdate();
+    }, { passive: true });
+    window.addEventListener('resize', requestFeatureUpdate);
+    requestFeatureUpdate();
 
     const imageCandidates = {
       logo: [
