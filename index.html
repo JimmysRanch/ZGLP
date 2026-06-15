@@ -87,18 +87,16 @@
       backdrop-filter: blur(18px);
       background: linear-gradient(180deg, rgba(2,8,23,.88), rgba(2,8,23,.48));
     }
-    .nav-inner { height: 116px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
-    .brand { display: flex; align-items: center; gap: 18px; min-width: 0; }
-    .logo-box { width: 144px; height: 96px; display: grid; place-items: center; position: relative; }
-    .logo-img { position: relative; z-index: 1; width: 144px; height: 96px; object-fit: contain; filter: drop-shadow(0 0 18px rgba(255,34,191,.42)); opacity: 0; transition: opacity .3s ease; }
+    .nav-inner { min-height: 72px; padding: 10px 0; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+    .brand { display: flex; align-items: center; min-width: 0; }
+    .logo-box { width: 92px; height: 50px; display: grid; place-items: center; position: relative; }
+    .logo-img { position: relative; z-index: 1; width: 92px; height: 50px; object-fit: contain; filter: drop-shadow(0 0 18px rgba(255,34,191,.42)); opacity: 0; transition: opacity .3s ease; }
     .logo-img.loaded { opacity: 1; }
     .logo-img.loaded + .logo-fallback, .logo-box:has(.logo-img.loaded) .logo-fallback { opacity: 0; }
     .logo-fallback { position:absolute; font-weight: 1000; font-size: 56px; letter-spacing: -.12em; color: var(--pink); text-shadow: 0 0 18px rgba(255,34,191,.7), 2px 0 0 var(--cyan); }
-    .brand-word { font-weight: 1000; line-height: .86; text-transform: uppercase; letter-spacing: .02em; font-size: 22px; }
-    .brand-word span { display: block; color: var(--pink); }
     .nav-links { display: flex; align-items: center; gap: 28px; color: var(--muted); font-size: 14px; font-weight: 800; }
     .nav-actions { display:flex; gap: 14px; align-items:center; min-width:0; font-weight:900; }
-    .btn { display:inline-flex; align-items:center; justify-content:center; gap:9px; border-radius: 14px; padding: 14px 22px; border: 1px solid transparent; font-weight: 1000; cursor: pointer; white-space: nowrap; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:9px; border-radius: 14px; padding: 11px 18px; border: 1px solid transparent; font-weight: 1000; cursor: pointer; white-space: nowrap; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
     .btn:hover { transform: translateY(-2px); }
     .btn-primary { background: linear-gradient(135deg, var(--pink), #ff52cc); box-shadow: var(--shadowPink); color: white; }
     .btn-secondary { background: rgba(7, 25, 51, .76); border-color: rgba(53,216,255,.55); box-shadow: var(--shadowBlue); color: white; }
@@ -116,7 +114,7 @@
     .proof { margin-top:28px; display:grid; grid-template-columns:repeat(4,1fr); gap:12px; max-width:650px; }
     .proof-item { display:flex; align-items:center; gap:9px; color:#d7e4f5; font-size:12px; font-weight:900; }
     .proof-icon { width:28px; height:28px; display:grid; place-items:center; border-radius:9px; border:1px solid rgba(255,34,191,.45); color: var(--pink); background:rgba(255,34,191,.08); }
-    .product-showcase { margin: -6px 0 52px; padding: 30px 0 18px; position:relative; scroll-margin-top: 116px; }
+    .product-showcase { margin: -6px 0 52px; padding: 30px 0 18px; position:relative; scroll-margin-top: 72px; }
     .product-showcase::before { content:""; position:absolute; inset: 6% -10% 8%; z-index:-1; pointer-events:none; background:radial-gradient(circle at 18% 46%, rgba(255,34,191,.2), transparent 30%), radial-gradient(circle at 72% 38%, rgba(53,216,255,.18), transparent 36%); filter:blur(8px); }
     .showcase-header { max-width:760px; margin:0 auto 12px; text-align:center; }
     .showcase-header p { color:#c8d4e6; line-height:1.55; margin:0 auto; max-width:620px; }
@@ -261,15 +259,15 @@
     }
     @media (max-width: 640px) {
       .wrap { width:min(100% - 22px, 1180px); }
-      .nav-inner { height:90px; gap:10px; }
-      .logo-box { width:96px; height:68px; }
-      .logo-img { width:96px; height:68px; }
-      .logo-fallback { font-size:40px; }
+      .nav-inner { min-height:64px; gap:10px; padding:8px 0; }
+      .logo-box { width:76px; height:42px; }
+      .logo-img { width:76px; height:42px; }
+      .logo-fallback { font-size:30px; }
       .final-logo-mark { width:min(360px, 100%); aspect-ratio:180 / 124; height:auto; }
       .final-logo-mark .logo-img { width:min(360px, 100%); height:auto; }
       .nav-actions { gap:8px; }
       .nav-actions .btn { padding:12px 14px; font-size:13px; }
-      .brand-word,.login { display:none; }
+      .login { display:none; }
       .hero { padding-top:34px; }
       .hero > .reveal:first-of-type { padding: 20px; }
       .proof,.trust,.pills { grid-template-columns:1fr; }
@@ -293,7 +291,6 @@
     <div class="wrap nav-inner">
       <a class="brand" href="#top" aria-label="Zoomie Groomie home">
         <span class="logo-box"><img id="logoTop" class="logo-img" alt="Zoomie Groomie logo" /><span class="logo-fallback">ZG</span></span>
-        <span class="brand-word">Zoomie <span>Groomie</span></span>
       </a>
       <div class="nav-links"><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#resources">Resources</a><a href="#about">About</a><a href="#contact">Contact</a></div>
       <div class="nav-actions"><a class="login" href="mailto:support@zoomiegroomie.com?subject=Zoomie%20Groomie%20login%20link">Log In</a><a class="btn btn-primary" href="mailto:hello@zoomiegroomie.com?subject=Start%20my%20free%20Zoomie%20Groomie%20trial">Start Free Trial</a></div>
